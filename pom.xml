@@ -22,9 +22,9 @@
         <module>MarketPlace</module>
     </modules>
     <scm>
-        <connection>scm:git:git@github.com:resthub/resthub-spring-stack.git</connection>
-        <developerConnection>scm:git:git@github.com:resthub/resthub-spring-stack.git</developerConnection>
-        <url>scm:git:git@github.com:resthub/resthub-spring-stack.git</url>
+        <connection>git@github.com:dsrahul/workspace.git</connection>
+        <developerConnection>git@github.com:dsrahul/workspace.git</developerConnection>
+        <url>git@github.com:dsrahul/workspace.git</url>
       <tag>HEAD</tag>
   </scm>
 
