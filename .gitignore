@@ -49,3 +49,4 @@ Temporary Items
 #custom ignore
 .metadata
 .recommenders
+/RemoteSystemsTempFiles/
