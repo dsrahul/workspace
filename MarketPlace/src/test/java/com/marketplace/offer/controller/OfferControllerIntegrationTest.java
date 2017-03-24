@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
+import org.springframework.web.client.RestClientException;
 
 import com.marketplace.config.StandardAPIError;
 import com.marketplace.offer.dto.OfferDTO;
@@ -160,6 +162,15 @@ public class OfferControllerIntegrationTest {
 		OfferDTO[] body = response.getBody();
 		assertThat(body).isNull();
         
+	}
+
+
+	@Test
+	public void testDeleteOffer() throws Exception {
+	
+		log.info("testDeleteOffer");
+		restTemplate.delete("/merchants/21/offers/1");
+        assertTrue(true);
 	}
 	
 	

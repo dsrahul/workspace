@@ -7,11 +7,13 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -30,6 +32,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -336,6 +339,20 @@ public class OfferControllerTest {
 		verify(offerService, times(1)).findMerchantOffersByOfferId(1L, 1L);
 	}
 	
+	@Test
+	public void testDeleteSuccess() throws Exception  {
+		
+		ResponseEntity<HttpStatus> entity = offerController.delete(1L, 1L);
+		assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+		assertThat(entity.getBody()).isNull();
+		
+		reset(offerService);
+		mockMvc.perform(delete("/merchants/1/offers/1"))
+				.andExpect(status().isOk());				
+		verify(offerService, times(1)).deleteOfferByIdAndMerchantId(1L, 1L);
+		
+	}	
+	
 	
     /*
      * converts a Java object into JSON representation
@@ -348,5 +365,4 @@ public class OfferControllerTest {
             throw new RuntimeException(e);
         }
     }
-
 }

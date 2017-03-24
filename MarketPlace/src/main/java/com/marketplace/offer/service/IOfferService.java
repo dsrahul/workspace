@@ -14,4 +14,6 @@ public interface IOfferService {
 
 	List<OfferDTO> findMerchantOffersByOfferId(Long merchantId, Long offerId);
 
+	void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId);
+
 }

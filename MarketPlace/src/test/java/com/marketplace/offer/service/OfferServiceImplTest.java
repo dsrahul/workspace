@@ -2,6 +2,8 @@ package com.marketplace.offer.service;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -55,6 +57,22 @@ public class OfferServiceImplTest {
 		verifyNoMoreInteractions(offerRepository);
 		
 		//when(offerRepository.findAll()).thenReturn(Arrays.asList(new OfferDTO(1L, "Title", "Description", 1L, 1L, validFromDate, validToDate)));
+	}
+	
+	@Test
+	public void testDeleteByOfferID() throws Exception {
+		service.deleteOfferByIdAndMerchantId(1L, 1L);
+		assertTrue("No exception thrown", true);
+		verify(offerRepository, times(1)).deleteByMerchantIdAndId(1L, 1L);
+		verifyNoMoreInteractions(offerRepository);
+	}
+	@Ignore
+	@Test(expected=RuntimeException.class)	
+	public void testDeleteByOfferIDThrowException() throws Exception {
+		doThrow(new RuntimeException()).when(offerRepository).delete(2L);		
+		service.deleteOfferByIdAndMerchantId(2L, 2L);
+		verify(offerRepository, times(1)).deleteByMerchantIdAndId(2L, 2L);
+		verifyNoMoreInteractions(offerRepository);
 	}
 
 }

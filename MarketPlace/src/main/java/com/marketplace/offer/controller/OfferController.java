@@ -101,6 +101,14 @@ public class OfferController {
 			return new ResponseEntity<List<OfferDTO>>(findAllOffers, HttpStatus.OK);
 		}
 	}
+
+    @RequestMapping(method=RequestMethod.DELETE, value="/merchants/{merchantId}/offers/{offerId}")
+    @ResponseBody
+	public ResponseEntity<HttpStatus> delete(@PathVariable Long offerId, @PathVariable Long merchantId) {
+    	log.debug("Servicing request to delete an offer");
+		offerService.deleteOfferByIdAndMerchantId(merchantId, offerId);
+		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+	}
     
 	
 }

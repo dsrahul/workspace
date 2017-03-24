@@ -1,7 +1,8 @@
 package com.marketplace.offer.service;
 
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,8 @@ import com.marketplace.offer.repository.OfferRepository;
 
 @Component
 public class OfferServiceImpl implements IOfferService {
+	private static final Logger log = LoggerFactory.getLogger(OfferServiceImpl.class);
+			
 
 	@Autowired
 	private OfferRepository offerRepository;
@@ -44,5 +47,16 @@ public class OfferServiceImpl implements IOfferService {
 	public List<OfferDTO> findMerchantOffersByOfferId(final Long merchantId, Long offerId) {
 		return offerRepository.findByMerchantIdAndId(merchantId, offerId);
 	}
+
+
+	/**
+	 * Service method to delete an Offer
+	 * A Runtime exception is thrown by the repository if the expected offer does not exists
+	 */
+	@Override
+	public void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId) {		
+		offerRepository.deleteByMerchantIdAndId(merchantId, offerId);		
+	}
+	
 
 }

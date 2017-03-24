@@ -12,4 +12,6 @@ public interface OfferRepository extends JpaRepository<OfferDTO, Long> {
 
 	List<OfferDTO> findByMerchantId(Long merchantId);
 
+	void deleteByMerchantIdAndId(Long merchantId, Long offerId);
+
 }
