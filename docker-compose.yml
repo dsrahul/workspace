@@ -1,0 +1,31 @@
+mongodb:
+ image: mongo
+ ports:
+   - "39000:27017"
+ volumes:
+  - /d/docker/images/mongodb/data:/data/db
+  - /d/docker/images/mongodb/log:/var/log/mongodb
+employee:
+ build: dkr-employee-mongodb
+ ports:
+  - "8080"
+ links:
+  - mongodb
+reward:
+ build: dkr-rewards-mongodb
+ ports:
+  - "8080"
+ links:
+  - mongodb
+mission:
+ build: dkr-missions-mongodb
+ ports:
+  - "8080"
+ links:
+  - mongodb
+ha_employee:
+ image: tutum/haproxy
+ links:
+   - employee
+ ports:
+   - "8080:80"
