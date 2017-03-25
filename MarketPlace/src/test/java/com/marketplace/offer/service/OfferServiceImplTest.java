@@ -47,8 +47,8 @@ public class OfferServiceImplTest {
 
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
-		OfferDTO offer = new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate);
-		OfferDTO expected = new OfferDTO(1L, "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate);
+		OfferDTO offer = new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y");
+		OfferDTO expected = new OfferDTO(1L, "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y");
 		when(offerRepository.save(offer)).thenReturn(expected);
 		
 		OfferDTO actual = service.addOffer(offer);
@@ -63,7 +63,9 @@ public class OfferServiceImplTest {
 	public void testDeleteByOfferID() throws Exception {
 		service.deleteOfferByIdAndMerchantId(1L, 1L);
 		assertTrue("No exception thrown", true);
-		verify(offerRepository, times(1)).deleteByMerchantIdAndId(1L, 1L);
+		//verify(offerRepository, times(1)).deleteByMerchantIdAndId(1L, 1L);
+		//verifyNoMoreInteractions(offerRepository);
+		verify(offerRepository, times(1)).deleteOffer(1L, 1L);
 		verifyNoMoreInteractions(offerRepository);
 	}
 	@Ignore

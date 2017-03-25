@@ -55,7 +55,9 @@ public class OfferServiceImpl implements IOfferService {
 	 */
 	@Override
 	public void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId) {		
-		offerRepository.deleteByMerchantIdAndId(merchantId, offerId);		
+		int deleteOffer = offerRepository.deleteOffer(merchantId, offerId);
+		log.debug("Deleted a total of {} rows", deleteOffer);
+		//offerRepository.deleteByMerchantIdAndId(merchantId, offerId);		
 	}
 	
 

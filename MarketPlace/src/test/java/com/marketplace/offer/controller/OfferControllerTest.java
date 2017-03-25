@@ -75,12 +75,12 @@ public class OfferControllerTest {
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
 		List<OfferDTO> lOfOffers = Arrays.asList(
-				new OfferDTO( "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate),
-				new OfferDTO( "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+				new OfferDTO( "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
+				new OfferDTO( "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		
 		List<OfferDTO> actual = Arrays.asList(
-				new OfferDTO(1L, "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate),
-				new OfferDTO(2L, "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+				new OfferDTO(1L, "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
+				new OfferDTO(2L, "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 
 		doReturn(actual).when(offerService).bulkAdd(any());		
 		ResponseEntity<List<OfferDTO>> findAll = offerController.addOffers(lOfOffers, 1L);
@@ -104,9 +104,9 @@ public class OfferControllerTest {
 
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
-		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		
-		List<OfferDTO> actualOffer = Arrays.asList( new OfferDTO(1L, "TITLE", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+		List<OfferDTO> actualOffer = Arrays.asList( new OfferDTO(1L, "TITLE", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.bulkAdd(any())).thenReturn(actualOffer);
 		
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
@@ -130,7 +130,7 @@ public class OfferControllerTest {
 
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
-		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.bulkAdd(any())).thenReturn(null);
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
 		assertThat(addOffers).isNotNull();
@@ -150,7 +150,7 @@ public class OfferControllerTest {
 
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
-		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 2L, 1L, validFromDate, validToDate));
+		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 2L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.bulkAdd(any())).thenReturn(null);
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
 		assertThat(addOffers).isNotNull();
@@ -170,7 +170,7 @@ public class OfferControllerTest {
 
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
-		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.addOffer(any())).thenThrow(new RuntimeException());
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
 		assertThat(addOffers).isNotNull();
@@ -192,8 +192,8 @@ public class OfferControllerTest {
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
 		List<OfferDTO> lOfAllOffers = Arrays.asList(
-				new OfferDTO(1L, "Save 40% at papajohns.com", "To redeem this offer, go to www.papajohns.com, login to your online account and enter code GET40 in the \"Enter a Promo Code\" field. ", 1L, 1L, 1L, validFromDate, validToDate),
-				new OfferDTO(2L, "2 for 1 Tour", "Book your Tour with us and receive two tickets for the price of one.", 2L, 1L, 1L, validFromDate, validToDate));
+				new OfferDTO(1L, "Save 40% at papajohns.com", "To redeem this offer, go to www.papajohns.com, login to your online account and enter code GET40 in the \"Enter a Promo Code\" field. ", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
+				new OfferDTO(2L, "2 for 1 Tour", "Book your Tour with us and receive two tickets for the price of one.", 2L, 1L, 1L, validFromDate, validToDate, "Y"));
 		
 		when(offerService.findOffersByMerchantId(1L)).thenReturn(lOfAllOffers);		
 		ResponseEntity<List<OfferDTO>> findAll = offerController.findOffersForMerchantId(1L);
@@ -263,7 +263,7 @@ public class OfferControllerTest {
 	public void testFindMerchantOffersByOfferIdSuccess() throws Exception {
 		Date validFromDate = dateformat.parse("2017-01-30");
 		Date validToDate = dateformat.parse("2017-02-20");
-		List<OfferDTO> offer = Arrays.asList(new OfferDTO(1L, "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate));
+		List<OfferDTO> offer = Arrays.asList(new OfferDTO(1L, "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		
 		when(offerService.findMerchantOffersByOfferId(1L, 1L)).thenReturn(offer);
 		

@@ -39,7 +39,7 @@ public class OfferRepositoryIntegrationTest {
 		final Date validFromDate = dateformat.parse("2017-01-30");
 		final Date validToDate = dateformat.parse("2017-02-20");
 		
-		final OfferDTO offerDTO = new OfferDTO( "Title1", "Description", 100057L, 1L, 200057L, validFromDate, validToDate);
+		final OfferDTO offerDTO = new OfferDTO( "Title1", "Description", 100057L, 1L, 200057L, validFromDate, validToDate, "Y");
 		final OfferDTO savedOffer = offerRepository.save(offerDTO);
 
 		assertThat(savedOffer, notNullValue());
@@ -57,7 +57,7 @@ public class OfferRepositoryIntegrationTest {
 		final Date validFromDate = dateformat.parse("2017-01-30");
 		final Date validToDate = dateformat.parse("2017-02-20");
 		
-		final OfferDTO offerDTO = new OfferDTO( "Title1", "Description", 2L, 1L, 1L, validFromDate, validToDate);
+		final OfferDTO offerDTO = new OfferDTO( "Title1", "Description", 2L, 1L, 1L, validFromDate, validToDate, "Y");
 		
 		assertThatThrownBy(() -> offerRepository.save(offerDTO)).isInstanceOf(DataIntegrityViolationException.class);
 	}

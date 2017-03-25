@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity
+@Entity(name="offer")
 @Table(name = "TOFFER")
 public class OfferDTO {
 
@@ -59,11 +59,16 @@ public class OfferDTO {
 	@Column(name = "VALID_TO")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date validTo;
+	
+	
+	@Column(name = "ACTIVE")
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
+	private String active;
 
 	public OfferDTO() {
 	}
 
-	public OfferDTO(String title, String description, Long typeId, Long merchantId, Long categoryId, Date validFrom, Date validTo) {
+	public OfferDTO(String title, String description, Long typeId, Long merchantId, Long categoryId, Date validFrom, Date validTo, String active) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -72,10 +77,11 @@ public class OfferDTO {
 		this.categoryId = categoryId;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
+		this.active = active;
 	}
 
 	public OfferDTO(Long id, String title, String description, Long typeId, Long categoryId, Long merchantId, Date validFrom,
-			Date validTo) {
+			Date validTo, String active) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -85,6 +91,7 @@ public class OfferDTO {
 		this.categoryId = categoryId;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
+		this.active = active;
 	}
 
 	public Long getId() {
@@ -131,8 +138,12 @@ public class OfferDTO {
 		return categoryDTO;
 	}
 
+	public String getActive() {
+		return active;
+	}
+
 	public OfferDTO(Long id, String title, String description, Long typeId, OfferTypeDTO offerType, Long categoryId,
-			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, Date validFrom, Date validTo) {
+			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, Date validFrom, Date validTo, String active) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -145,6 +156,7 @@ public class OfferDTO {
 		this.merchantDTO = merchantDTO;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
+		this.active = active;
 	}
 	
 	

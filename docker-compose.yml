@@ -5,6 +5,10 @@ mongodb:
  volumes:
   - /d/docker/images/mongodb/data:/data/db
   - /d/docker/images/mongodb/log:/var/log/mongodb
+marketplace:
+ build: MarketPlace
+ ports:
+  - "39001:8080"
 employee:
  build: dkr-employee-mongodb
  ports:

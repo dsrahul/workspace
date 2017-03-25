@@ -3,6 +3,7 @@ package com.marketplace.offer.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -102,6 +103,7 @@ public class OfferController {
 		}
 	}
 
+    @Transactional
     @RequestMapping(method=RequestMethod.DELETE, value="/merchants/{merchantId}/offers/{offerId}")
     @ResponseBody
 	public ResponseEntity<HttpStatus> delete(@PathVariable Long offerId, @PathVariable Long merchantId) {
