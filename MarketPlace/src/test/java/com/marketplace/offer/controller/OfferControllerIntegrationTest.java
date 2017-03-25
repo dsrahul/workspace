@@ -14,9 +14,11 @@ import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.test.annotation.Repeat;
 import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -44,6 +47,7 @@ import com.marketplace.offer.repository.OfferRepository;
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data-test-h2.sql")
 @TestPropertySource(locations="classpath:application-test.properties")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OfferControllerIntegrationTest {	
 	private static final Logger log = LoggerFactory.getLogger(OfferControllerIntegrationTest.class);
 
@@ -166,6 +170,7 @@ public class OfferControllerIntegrationTest {
 
 
 	@Test
+	@Repeat(2)
 	@Timed(millis=200)
 	public void testDeleteOffer() throws Exception {
 	

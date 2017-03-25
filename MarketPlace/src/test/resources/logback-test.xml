@@ -10,7 +10,7 @@
     </appender>
 
     <logger name="org.marketplace">
-        <level value="debug" />
+        <level value="off" />
     </logger>
 
     <logger name="org.springframework">
