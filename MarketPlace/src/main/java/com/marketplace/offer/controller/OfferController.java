@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marketplace.offer.dto.OfferDTO;
+import com.marketplace.offer.exception.OfferNotUpdatedException;
 import com.marketplace.offer.service.IOfferService;
 /**
  * The Offer Controller responsible for servicing all offer requests
@@ -90,12 +91,14 @@ public class OfferController {
      * @return If offers found then status code HttpStatus.OK along with a list of offers in body
      * if no offers found then a status code of HttpStatus.NO_CONTENT with empty body.
      */
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = {"/merchants/{merchantId}/offers/{offerId}"}, method = RequestMethod.GET)
     @ResponseBody
 	public ResponseEntity<List<OfferDTO>> findMerchantOffersByOfferId( @PathVariable(name="merchantId", required=true) final Long merchantId,
 			@PathVariable(name="offerId", required=true) final Long offerId) {
 		log.debug("Servicing request to find Offers from a Merchant");
-		final List<OfferDTO> findAllOffers = offerService.findMerchantOffersByOfferId(merchantId, offerId);
+		List<OfferDTO> findAllOffers = offerService.findMerchantOffersByOfferId(merchantId, offerId);
+		
 		if (findAllOffers == null || findAllOffers.isEmpty()) {
 			return new ResponseEntity<List<OfferDTO>>(HttpStatus.NO_CONTENT);
 		} else {
@@ -106,10 +109,15 @@ public class OfferController {
     @Transactional
     @RequestMapping(method=RequestMethod.DELETE, value="/merchants/{merchantId}/offers/{offerId}")
     @ResponseBody
-	public ResponseEntity<HttpStatus> delete(@PathVariable Long offerId, @PathVariable Long merchantId) {
+	public ResponseEntity<String> delete(@PathVariable Long offerId, @PathVariable Long merchantId) {
     	log.debug("Servicing request to delete an offer");
-		offerService.deleteOfferByIdAndMerchantId(merchantId, offerId);
-		return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+		try {
+			offerService.deleteOfferByIdAndMerchantId(merchantId, offerId);
+		} catch (OfferNotUpdatedException e) {
+			log.debug("Deletion returned an exception", e);
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_MODIFIED);
+		}
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
     
 	

@@ -167,14 +167,30 @@ public class OfferControllerIntegrationTest {
 
 
 	@Test
+	public void testDeleteOfferFailure() throws Exception {
+	
+		log.info("testDeleteOffer");
+		ResponseEntity<String> response = restTemplate.exchange("/merchants/21/offers/1", HttpMethod.DELETE, null, String.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.NOT_MODIFIED));
+        assertThat(response, notNullValue());
+		assertThat(response.getBody()).isNull();		
+	}
+
+
+	@Test
 	public void testDeleteOfferSuccess() throws Exception {
 	
 		log.info("testDeleteOffer");
-		restTemplate.delete("/merchants/21/offers/1");
-		ResponseEntity<OfferDTO> response = restTemplate.exchange("/merchants/21/offers/1", HttpMethod.DELETE, null, OfferDTO.class);
+		ResponseEntity<String> response = restTemplate.exchange("/merchants/3/offers/1", HttpMethod.DELETE, null, String.class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response, notNullValue());
-		assertThat(response.getBody()).isNull();
+		assertThat(response.getBody()).isNull();	
+		
+		ResponseEntity<OfferDTO[]> afterDelete = restTemplate.getForEntity("/merchants/3/offers/1", OfferDTO[].class);
+        assertThat(afterDelete.getStatusCode(), is(HttpStatus.OK));
+        assertThat(afterDelete, notNullValue());
+		OfferDTO[] body = afterDelete.getBody();
+		assertThat(body[0].getDeleted(), is("Y"));
 	}
 	
 	

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.marketplace.offer.dto.OfferDTO;
+import com.marketplace.offer.exception.OfferNotUpdatedException;
 import com.marketplace.offer.repository.OfferRepository;
 
 @Component
@@ -53,12 +54,14 @@ public class OfferServiceImpl implements IOfferService {
 	/**
 	 * Service method to delete an Offer
 	 * A Runtime exception is thrown by the repository if the expected offer does not exists
+	 * @throws OfferNotUpdatedException 
 	 */
 	@Override
-	public void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId) {		
-		//int deleteOffer = offerRepository.deleteOffer(merchantId, offerId);
-		//log.debug("Deleted a total of {} rows", deleteOffer);
-		offerRepository.deleteByMerchantIdAndId(merchantId, offerId);		
+	public void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId) throws OfferNotUpdatedException {		
+		int deleteOffer = offerRepository.deleteOffer(merchantId, offerId);
+		if (deleteOffer == 0) {
+			throw new OfferNotUpdatedException("Offer was already deleted or does not exist");
+		}
 	}
 	
 

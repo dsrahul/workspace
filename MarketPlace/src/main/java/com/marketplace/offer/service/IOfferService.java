@@ -3,6 +3,7 @@ package com.marketplace.offer.service;
 import java.util.List;
 
 import com.marketplace.offer.dto.OfferDTO;
+import com.marketplace.offer.exception.OfferNotUpdatedException;
 
 public interface IOfferService {
 
@@ -14,6 +15,6 @@ public interface IOfferService {
 
 	List<OfferDTO> findMerchantOffersByOfferId(Long merchantId, Long offerId);
 
-	void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId);
+	void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId) throws OfferNotUpdatedException;
 
 }

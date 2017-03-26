@@ -61,14 +61,14 @@ public class OfferDTO {
 	private Date validTo;
 	
 	
-	@Column(name = "ACTIVE")
+	@Column(name = "DELETED")
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	private String active;
+	private String deleted;
 
 	public OfferDTO() {
 	}
 
-	public OfferDTO(String title, String description, Long typeId, Long merchantId, Long categoryId, Date validFrom, Date validTo, String active) {
+	public OfferDTO(String title, String description, Long typeId, Long merchantId, Long categoryId, Date validFrom, Date validTo, String deleted) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -77,7 +77,7 @@ public class OfferDTO {
 		this.categoryId = categoryId;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
-		this.active = active;
+		this.deleted = deleted;
 	}
 
 	public OfferDTO(Long id, String title, String description, Long typeId, Long categoryId, Long merchantId, Date validFrom,
@@ -91,7 +91,7 @@ public class OfferDTO {
 		this.categoryId = categoryId;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
-		this.active = active;
+		this.deleted = active;
 	}
 
 	public Long getId() {
@@ -138,12 +138,12 @@ public class OfferDTO {
 		return categoryDTO;
 	}
 
-	public String getActive() {
-		return active;
+	public String getDeleted() {
+		return deleted;
 	}
 
 	public OfferDTO(Long id, String title, String description, Long typeId, OfferTypeDTO offerType, Long categoryId,
-			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, Date validFrom, Date validTo, String active) {
+			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, Date validFrom, Date validTo, String deleted) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -156,7 +156,13 @@ public class OfferDTO {
 		this.merchantDTO = merchantDTO;
 		this.validFrom = validFrom;
 		this.validTo = validTo;
-		this.active = active;
+		this.deleted = deleted;
+	}
+
+	@Override
+	public String toString() {
+		return "OfferDTO [id=" + id + ", typeId=" + typeId + ", categoryId=" + categoryId + ", merchantId=" + merchantId
+				+ ", deleted=" + deleted + "]";
 	}
 	
 	

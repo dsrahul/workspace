@@ -3,6 +3,7 @@ package com.marketplace.offer.service;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -12,6 +13,7 @@ import static org.mockito.Mockito.when;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.marketplace.offer.dto.OfferDTO;
+import com.marketplace.offer.exception.OfferNotUpdatedException;
 import com.marketplace.offer.repository.OfferRepository;
 @RunWith(MockitoJUnitRunner.class)
 public class OfferServiceImplTest {
@@ -57,21 +60,26 @@ public class OfferServiceImplTest {
 		verifyNoMoreInteractions(offerRepository);
 		
 		//when(offerRepository.findAll()).thenReturn(Arrays.asList(new OfferDTO(1L, "Title", "Description", 1L, 1L, validFromDate, validToDate)));
-	}
+	}	
 	
 	@Test
 	public void testDeleteByOfferID() throws Exception {
-		service.deleteOfferByIdAndMerchantId(1L, 1L);
+		doReturn(1).when(offerRepository).deleteOffer(3L, 1L);
+		service.deleteOfferByIdAndMerchantId(3L, 1L);
 		assertTrue("No exception thrown", true);
-		verify(offerRepository, times(1)).deleteByMerchantIdAndId(1L, 1L);
+		verify(offerRepository, times(1)).deleteOffer(3L, 1L);
 		verifyNoMoreInteractions(offerRepository);
 	}
-	@Ignore
-	@Test(expected=RuntimeException.class)	
+
+	@Test
 	public void testDeleteByOfferIDThrowException() throws Exception {
-		doThrow(new RuntimeException()).when(offerRepository).delete(2L);		
-		service.deleteOfferByIdAndMerchantId(2L, 2L);
-		verify(offerRepository, times(1)).deleteByMerchantIdAndId(2L, 2L);
+		doReturn(0).when(offerRepository).deleteOffer(2L, 2L);		
+		try {
+			service.deleteOfferByIdAndMerchantId(2L, 2L);
+		} catch (Exception e) {
+			assertThat(e, IsInstanceOf.instanceOf(OfferNotUpdatedException.class));
+		}
+		verify(offerRepository, times(1)).deleteOffer(2L, 2L);
 		verifyNoMoreInteractions(offerRepository);
 	}
 
