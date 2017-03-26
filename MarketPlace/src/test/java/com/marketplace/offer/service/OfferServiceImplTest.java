@@ -63,9 +63,7 @@ public class OfferServiceImplTest {
 	public void testDeleteByOfferID() throws Exception {
 		service.deleteOfferByIdAndMerchantId(1L, 1L);
 		assertTrue("No exception thrown", true);
-		//verify(offerRepository, times(1)).deleteByMerchantIdAndId(1L, 1L);
-		//verifyNoMoreInteractions(offerRepository);
-		verify(offerRepository, times(1)).deleteOffer(1L, 1L);
+		verify(offerRepository, times(1)).deleteByMerchantIdAndId(1L, 1L);
 		verifyNoMoreInteractions(offerRepository);
 	}
 	@Ignore

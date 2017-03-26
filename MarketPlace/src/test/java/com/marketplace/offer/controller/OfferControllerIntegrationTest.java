@@ -5,7 +5,6 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -30,8 +29,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequest;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.test.annotation.Repeat;
-import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
@@ -170,13 +167,14 @@ public class OfferControllerIntegrationTest {
 
 
 	@Test
-	@Repeat(2)
-	@Timed(millis=200)
-	public void testDeleteOffer() throws Exception {
+	public void testDeleteOfferSuccess() throws Exception {
 	
 		log.info("testDeleteOffer");
 		restTemplate.delete("/merchants/21/offers/1");
-        assertTrue(true);
+		ResponseEntity<OfferDTO> response = restTemplate.exchange("/merchants/21/offers/1", HttpMethod.DELETE, null, OfferDTO.class);
+        assertThat(response.getStatusCode(), is(HttpStatus.OK));
+        assertThat(response, notNullValue());
+		assertThat(response.getBody()).isNull();
 	}
 	
 	

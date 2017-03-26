@@ -1,6 +1,7 @@
 package com.marketplace.offer.service;
 
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +56,9 @@ public class OfferServiceImpl implements IOfferService {
 	 */
 	@Override
 	public void deleteOfferByIdAndMerchantId(Long merchantId, Long offerId) {		
-		int deleteOffer = offerRepository.deleteOffer(merchantId, offerId);
-		log.debug("Deleted a total of {} rows", deleteOffer);
-		//offerRepository.deleteByMerchantIdAndId(merchantId, offerId);		
+		//int deleteOffer = offerRepository.deleteOffer(merchantId, offerId);
+		//log.debug("Deleted a total of {} rows", deleteOffer);
+		offerRepository.deleteByMerchantIdAndId(merchantId, offerId);		
 	}
 	
 
