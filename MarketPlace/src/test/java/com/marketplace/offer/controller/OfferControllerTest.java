@@ -36,7 +36,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Timed;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -130,7 +129,6 @@ public class OfferControllerTest {
 	}
 
 	@Test
-	@Timed(millis=200)
 	public void testAddOfferNotAdded() throws Exception {
 
 		Date validFromDate = dateformat.parse("2017-01-30");
