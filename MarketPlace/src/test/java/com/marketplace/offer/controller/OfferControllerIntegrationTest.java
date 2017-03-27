@@ -46,6 +46,7 @@ import com.marketplace.offer.repository.OfferRepository;
 @TestPropertySource(locations="classpath:application-test.properties")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OfferControllerIntegrationTest {	
+	
 	private static final Logger log = LoggerFactory.getLogger(OfferControllerIntegrationTest.class);
 
 	@Autowired
@@ -60,7 +61,7 @@ public class OfferControllerIntegrationTest {
 
 	@Test
 	public void someTest() {
-		assertTrue(true);
+		assertTrue(true);		
 	}
 	@Test
 	public void testFindOffers() throws Exception {		
@@ -83,6 +84,7 @@ public class OfferControllerIntegrationTest {
 		assertThat(body).isNull();
         
 	}
+	
 	@Ignore
 	@Test
 	public void testAddOfferNotAuthorised() throws IOException {
@@ -98,8 +100,7 @@ public class OfferControllerIntegrationTest {
 				log.info("======================="+response.getStatusCode().toString());
 				return response;
 			}
-		});
-		
+		});		
 		assertThat(clientHttpResponse, notNullValue());
 		//TODO assertThat(clientHttpResponse.getStatusCode(), is(HttpStatus.UNAUTHORIZED));
 		
