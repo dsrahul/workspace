@@ -18,9 +18,12 @@ public interface OfferRepository extends JpaRepository<OfferDTO, Long> {
 
 	List<OfferDTO> findByMerchantId(Long merchantId);
 
-
 	@Modifying(clearAutomatically = true)
 	@Query("update offer TOFF set TOFF.deleted = 'Y' where TOFF.id = :offerId and TOFF.merchantId = :merchantId")
 	int deleteOffer(@Param("merchantId") Long merchantId, @Param("offerId") Long offerId);
+
+	List<OfferDTO> findByMerchantIdAndDeleted(Long merchantId, String deleted);
+
+	List<OfferDTO> findByMerchantIdAndIdAndDeleted(Long merchantId, Long offerId, String string);
 
 }

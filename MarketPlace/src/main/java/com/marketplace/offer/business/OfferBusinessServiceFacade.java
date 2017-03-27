@@ -1,5 +1,7 @@
 package com.marketplace.offer.business;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.marketplace.offer.dto.OfferDTO;
 import com.marketplace.offer.repository.OfferRepository;
+import com.marketplace.util.date.IDateTimeManager;
 
 @Component
 public class OfferBusinessServiceFacade implements IOfferBusinessService {
@@ -17,21 +20,31 @@ public class OfferBusinessServiceFacade implements IOfferBusinessService {
 	private Logger log = LoggerFactory.getLogger(OfferBusinessServiceFacade.class);
 	@Autowired
 	private OfferRepository offerRepository;
+	@Autowired
+	private IDateTimeManager dateTimeManager;
 	
 	@Override
 	public List<OfferDTO> getActiveOffersForMerchantId(Long merchantId, final Long offerId) {
-		List<OfferDTO> findByMerchantId = offerRepository.findByMerchantId(merchantId);
+		List<OfferDTO> findByMerchantId = null;
+		if (offerId == null) {
+			findByMerchantId = offerRepository.findByMerchantIdAndDeleted(merchantId, "N");
+		} else {
+			findByMerchantId = offerRepository.findByMerchantIdAndIdAndDeleted(merchantId, offerId, "N");
+		}
 		
 		log.debug("{}", findByMerchantId);
-		if (offerId != null) {
-			return findByMerchantId.stream().filter(ele -> {
-				return ele.getId().longValue() == offerId.longValue() && ele.getDeleted().equals("N");
-			}).collect(Collectors.toList());
-		} else {
-			return findByMerchantId.stream().filter(ele -> {
-				return ele.getDeleted().equals("N");
-			}).collect(Collectors.toList());
-		}
+
+		LocalDate currentLocalDate = dateTimeManager.getCurrentLocalDate();
+		List<OfferDTO> collect = findByMerchantId.stream().filter(ele -> {
+			boolean equal = ele.getValidFrom().isEqual(currentLocalDate);
+			boolean equal2 = ele.getValidTo().isEqual(currentLocalDate);
+			boolean b = currentLocalDate.isAfter(ele.getValidFrom())
+					&& currentLocalDate.isBefore(ele.getValidTo());
+			return equal
+					|| equal2 
+					|| b;
+		}).collect(Collectors.toList());
+		return collect;
 	}
 
 }

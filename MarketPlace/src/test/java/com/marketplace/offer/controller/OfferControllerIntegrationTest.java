@@ -97,7 +97,7 @@ public class OfferControllerIntegrationTest {
 
 			@Override
 			public ClientHttpResponse extractData(ClientHttpResponse response) throws IOException {
-				log.info("======================="+response.getStatusCode().toString());
+				//log.info("======================="+response.getStatusCode().toString());
 				return response;
 			}
 		});		
@@ -139,10 +139,8 @@ public class OfferControllerIntegrationTest {
 	}
 
 	@Test
-	public void testFindAllOffers() throws Exception {
-	
-		log.info("testFindAllOffers");
-		
+	public void testFindAllOffers() throws Exception {	
+		log.info("testFindAllOffers");		
 		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers", OfferDTO[].class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response, notNullValue());
@@ -153,8 +151,7 @@ public class OfferControllerIntegrationTest {
 
 
 	@Test
-	public void testFindAllOffersNoResult() throws Exception {
-	
+	public void testFindAllOffersNoResult() throws Exception {	
 		log.info("testFindAllOffersNoResult");
 		OfferRepository.deleteAll();
 		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/21/offers", OfferDTO[].class);
