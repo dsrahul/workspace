@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
@@ -25,8 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.marketplace.offer.dto.OfferDTO;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-//@DataJpaTest(showSql=true)
+//@SpringBootTest
+@DataJpaTest(showSql=true)
 //@ActiveProfiles(value="test")
 @Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:data-test-h2.sql")
 public class OfferRepositoryIntegrationTest {
@@ -35,8 +35,7 @@ public class OfferRepositoryIntegrationTest {
 	@Autowired
 	private OfferRepository offerRepository;
 	@Before
-	public void setUp() throws Exception {	
-		
+	public void setUp() throws Exception {			
 		//offerRepository.deleteAll();
 	}
 

@@ -19,11 +19,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -34,7 +32,6 @@ import org.junit.runners.MethodSorters;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,11 +46,8 @@ import com.marketplace.offer.exception.OfferNotUpdatedException;
 import com.marketplace.offer.service.OfferServiceImpl;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class OfferControllerTest {
-
-	private final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
 	private MockMvc mockMvc;
 

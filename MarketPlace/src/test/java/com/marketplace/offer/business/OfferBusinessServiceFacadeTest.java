@@ -3,10 +3,8 @@ package com.marketplace.offer.business;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -20,8 +18,6 @@ import com.marketplace.offer.repository.OfferRepository;
 
 @RunWith(SpringRunner.class)
 public class OfferBusinessServiceFacadeTest {
-
-	private final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 	
 	@InjectMocks
 	private OfferBusinessServiceFacade offerBusinessService;

@@ -5,12 +5,11 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -55,10 +54,14 @@ public class OfferControllerIntegrationTest {
 	private OfferRepository OfferRepository;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception {		
+		
 	}
 
-
+	@Test
+	public void someTest() {
+		assertTrue(true);
+	}
 	@Test
 	public void testFindOffers() throws Exception {		
 		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/1", OfferDTO[].class);
