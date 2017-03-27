@@ -1,11 +1,10 @@
 package com.marketplace.offer.business;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -33,8 +32,8 @@ public class OfferBusinessServiceFacadeTest {
 	@Test
 	public void testFindActiveOffersSuccess() throws Exception {			
 		
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");		
 		List<OfferDTO> intermediate = Arrays.asList(
 				new OfferDTO(1L, "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate, "N"),
 				new OfferDTO(2L, "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate, "N"));
@@ -50,10 +49,10 @@ public class OfferBusinessServiceFacadeTest {
 	}
 
 	@Test
-	public void testFindActiveOffersFailure() throws Exception {			
+	public void testFindActiveOffersFailure() throws Exception {
 		
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> intermediate = Arrays.asList(
 				new OfferDTO(1L, "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
 				new OfferDTO(2L, "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));

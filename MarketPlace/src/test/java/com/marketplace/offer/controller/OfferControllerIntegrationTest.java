@@ -5,10 +5,10 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.reset;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -53,27 +53,25 @@ public class OfferControllerIntegrationTest {
 	private TestRestTemplate restTemplate;
 	@Autowired
 	private OfferRepository OfferRepository;
+	
 	@Before
 	public void setUp() throws Exception {
 	}
 
 
 	@Test
-	public void testFindOffers() throws Exception {
-		
+	public void testFindOffers() throws Exception {		
 		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/1", OfferDTO[].class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response, notNullValue());
 		OfferDTO[] body = response.getBody();
 		assertThat(body, notNullValue());
-		assertThat(body.length, is(1));
-        
+		assertThat(body.length, is(1));        
 	}
 
 
 	@Test
-	public void testFindOffersNoResult() throws Exception {
-	
+	public void testFindOffersNoResult() throws Exception {	
 		log.info("testFindOffersNoResult");		
 		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/2", OfferDTO[].class);
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
@@ -109,10 +107,9 @@ public class OfferControllerIntegrationTest {
 	public void testAddOfferSuccess() throws Exception {
 	
 		log.info("testAddOfferSuccess");
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> lOfOffers = Arrays.asList(
 				new OfferDTO( "Title1", "Description", 100057L, 1L, 200057L, validFromDate, validToDate, "Y"),
 				new OfferDTO( "Title2", "Description", 100057L, 1L, 200057L, validFromDate, validToDate, "Y"));
@@ -127,10 +124,9 @@ public class OfferControllerIntegrationTest {
 	public void testAddOfferFailure() throws Exception {
 	
 		log.info("testAddOfferFailure");
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> lOfOffers = Arrays.asList(
 				new OfferDTO( "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
 				new OfferDTO( "Title2", "Description", 100057L, 2L, 1L, validFromDate, validToDate, "Y"));
@@ -191,6 +187,12 @@ public class OfferControllerIntegrationTest {
         assertThat(afterDelete, notNullValue());
         assertThat(afterDelete.getBody()).isNull();
         
+	}
+	
+	@Test
+	public void testLocalDate() {
+		
+		ResponseEntity<LocalDate> exchange = restTemplate.exchange("/time", HttpMethod.GET, null, LocalDate.class);
 	}
 	
 	

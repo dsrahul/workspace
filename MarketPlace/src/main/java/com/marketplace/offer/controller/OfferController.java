@@ -1,5 +1,6 @@
 package com.marketplace.offer.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -119,7 +120,13 @@ public class OfferController {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_MODIFIED);
 		}
 		return new ResponseEntity<String>(HttpStatus.OK);
-	}
+	}    
     
+    @RequestMapping(method=RequestMethod.GET, value="/time")
+    @ResponseBody
+	public ResponseEntity<LocalDate> time() {
+    	
+		return new ResponseEntity<LocalDate>(LocalDate.now(), HttpStatus.OK);
+	}
 	
 }

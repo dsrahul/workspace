@@ -4,12 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.isNotNull;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.Before;
@@ -35,8 +32,6 @@ import com.marketplace.offer.dto.OfferDTO;
 public class OfferRepositoryIntegrationTest {
 	
 	private Logger log = LoggerFactory.getLogger(OfferRepositoryIntegrationTest.class);
-
-	private final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 	@Autowired
 	private OfferRepository offerRepository;
 	@Before
@@ -47,8 +42,9 @@ public class OfferRepositoryIntegrationTest {
 
 	@Test
 	public void testSaveOfferSuccess() throws Exception {
-		final Date validFromDate = dateformat.parse("2017-01-30");
-		final Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		
 		final OfferDTO offerDTO = new OfferDTO( "Title1", "Description", 100057L, 1L, 200057L, validFromDate, validToDate, "Y");
 		final OfferDTO savedOffer = offerRepository.save(offerDTO);
@@ -63,10 +59,9 @@ public class OfferRepositoryIntegrationTest {
 
 	@Test
 	public void testSaveOfferFailure() throws Exception {
-		final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-		final Date validFromDate = dateformat.parse("2017-01-30");
-		final Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		
 		final OfferDTO offerDTO = new OfferDTO( "Title1", "Description", 2L, 1L, 1L, validFromDate, validToDate, "Y");
 		
@@ -86,6 +81,7 @@ public class OfferRepositoryIntegrationTest {
 	@Test
 	@Transactional
 	public void testDeleteOfferNotUpdated() {
+		
 		int deletecount = offerRepository.deleteOffer(3L, 21L);		
 		assertThat(deletecount, is(0));
 		List<OfferDTO> lOfOffers = offerRepository.findByMerchantIdAndId(3L, 1L);

@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.hamcrest.core.IsInstanceOf;
@@ -45,10 +46,9 @@ public class OfferServiceImplTest {
 
 	@Test
 	public void testAddOfferSuccess() throws Exception {
-		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		OfferDTO offer = new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y");
 		OfferDTO expected = new OfferDTO(1L, "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y");
 		when(offerRepository.save(offer)).thenReturn(expected);

@@ -1,5 +1,6 @@
 package com.marketplace.offer.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,6 +14,10 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 @Entity(name="offer")
 @Table(name = "TOFFER")
@@ -53,12 +58,16 @@ public class OfferDTO {
 	private MerchantDTO merchantDTO;
 
 	@Column(name = "VALID_FROM")
+	@JsonDeserialize(using=LocalDateDeserializer.class)
+	@JsonSerialize(using=LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date validFrom;
+	private LocalDate validFrom;
 
 	@Column(name = "VALID_TO")
+	@JsonDeserialize(using=LocalDateDeserializer.class)
+	@JsonSerialize(using=LocalDateSerializer.class)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date validTo;
+	private LocalDate validTo;
 	
 	
 	@Column(name = "DELETED")
@@ -68,7 +77,7 @@ public class OfferDTO {
 	public OfferDTO() {
 	}
 
-	public OfferDTO(String title, String description, Long typeId, Long merchantId, Long categoryId, Date validFrom, Date validTo, String deleted) {
+	public OfferDTO(String title, String description, Long typeId, Long merchantId, Long categoryId, LocalDate validFrom, LocalDate validTo, String deleted) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -80,8 +89,8 @@ public class OfferDTO {
 		this.deleted = deleted;
 	}
 
-	public OfferDTO(Long id, String title, String description, Long typeId, Long categoryId, Long merchantId, Date validFrom,
-			Date validTo, String active) {
+	public OfferDTO(Long id, String title, String description, Long typeId, Long categoryId, Long merchantId, LocalDate validFrom,
+			LocalDate validTo, String active) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -114,11 +123,11 @@ public class OfferDTO {
 		return merchantId;
 	}
 
-	public Date getValidFrom() {
+	public LocalDate getValidFrom() {
 		return validFrom;
 	}
 
-	public Date getValidTo() {
+	public LocalDate getValidTo() {
 		return validTo;
 	}
 
@@ -143,7 +152,7 @@ public class OfferDTO {
 	}
 
 	public OfferDTO(Long id, String title, String description, Long typeId, OfferTypeDTO offerType, Long categoryId,
-			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, Date validFrom, Date validTo, String deleted) {
+			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, LocalDate validFrom, LocalDate validTo, String deleted) {
 		super();
 		this.id = id;
 		this.title = title;

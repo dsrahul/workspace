@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -76,9 +77,9 @@ public class OfferControllerTest {
 
 	@Test
 	public void testBulkAddOfferSuccess() throws Exception {
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> lOfOffers = Arrays.asList(
 				new OfferDTO( "Title1", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
 				new OfferDTO( "Title2", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
@@ -106,9 +107,9 @@ public class OfferControllerTest {
 
 	@Test
 	public void testAddSingleOfferSuccess() throws Exception {
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		
 		List<OfferDTO> actualOffer = Arrays.asList( new OfferDTO(1L, "TITLE", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
@@ -132,9 +133,9 @@ public class OfferControllerTest {
 
 	@Test
 	public void testAddOfferNotAdded() throws Exception {
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.bulkAdd(any())).thenReturn(null);
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
@@ -152,9 +153,9 @@ public class OfferControllerTest {
 
 	@Test
 	public void testAddOfferNotAddedBadRequest() throws Exception {
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 2L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.bulkAdd(any())).thenReturn(null);
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
@@ -172,9 +173,9 @@ public class OfferControllerTest {
 
 	@Test
 	public void testAddOfferRuntimException() throws Exception {
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> offer = Arrays.asList(new OfferDTO( "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		when(offerService.addOffer(any())).thenThrow(new RuntimeException());
 		ResponseEntity<List<OfferDTO>> addOffers = offerController.addOffers(offer, 1L);
@@ -193,9 +194,9 @@ public class OfferControllerTest {
 
 	@Test
 	public void testFindAllOffersSuccess() throws Exception {
-
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> lOfAllOffers = Arrays.asList(
 				new OfferDTO(1L, "Save 40% at papajohns.com", "To redeem this offer, go to www.papajohns.com, login to your online account and enter code GET40 in the \"Enter a Promo Code\" field. ", 1L, 1L, 1L, validFromDate, validToDate, "Y"),
 				new OfferDTO(2L, "2 for 1 Tour", "Book your Tour with us and receive two tickets for the price of one.", 2L, 1L, 1L, validFromDate, validToDate, "Y"));
@@ -266,8 +267,9 @@ public class OfferControllerTest {
 	
 	@Test
 	public void testFindMerchantOffersByOfferIdSuccess() throws Exception {
-		Date validFromDate = dateformat.parse("2017-01-30");
-		Date validToDate = dateformat.parse("2017-02-20");
+		
+		LocalDate validFromDate = LocalDate.of(2017, 1, 30); //dateformat.parse("2017-01-30");
+		LocalDate validToDate = LocalDate.of(2017, 2, 20); //dateformat.parse("2017-02-20");
 		List<OfferDTO> offer = Arrays.asList(new OfferDTO(1L, "Title", "Description", 1L, 1L, 1L, validFromDate, validToDate, "Y"));
 		
 		when(offerService.findMerchantOffersByOfferId(1L, 1L)).thenReturn(offer);
@@ -359,6 +361,7 @@ public class OfferControllerTest {
 	
 	@Test
 	public void testDeleteFailure() throws Exception  {
+		
 		doThrow(new OfferNotUpdatedException("Some message")).when(offerService).deleteOfferByIdAndMerchantId(1L, 1L);
 		
 		ResponseEntity<String> entity = offerController.delete(1L, 1L);
