@@ -1,7 +1,6 @@
 package com.marketplace.offer.business;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,25 +24,23 @@ public class OfferBusinessServiceFacade implements IOfferBusinessService {
 	
 	@Override
 	public List<OfferDTO> getActiveOffersForMerchantId(Long merchantId, final Long offerId) {
-		List<OfferDTO> findByMerchantId = null;
+		List<OfferDTO> lOfOffers = null;
 		if (offerId == null) {
-			findByMerchantId = offerRepository.findByMerchantIdAndDeleted(merchantId, "N");
+			lOfOffers = offerRepository.findByMerchantIdAndDeleted(merchantId, "N");
 		} else {
-			findByMerchantId = offerRepository.findByMerchantIdAndIdAndDeleted(merchantId, offerId, "N");
+			lOfOffers = offerRepository.findByMerchantIdAndIdAndDeleted(merchantId, offerId, "N");
 		}
-		
-		log.debug("{}", findByMerchantId);
 
 		LocalDate currentLocalDate = dateTimeManager.getCurrentLocalDate();
-		List<OfferDTO> collect = findByMerchantId.stream().filter(ele -> {
-			boolean equal = ele.getValidFrom().isEqual(currentLocalDate);
-			boolean equal2 = ele.getValidTo().isEqual(currentLocalDate);
-			boolean b = currentLocalDate.isAfter(ele.getValidFrom())
-					&& currentLocalDate.isBefore(ele.getValidTo());
-			return equal
-					|| equal2 
-					|| b;
-		}).collect(Collectors.toList());
+		List<OfferDTO> collect = lOfOffers.stream()
+				.filter(ele -> {
+								boolean fromDate = ele.getValidFrom().isEqual(currentLocalDate);
+								boolean toDate = ele.getValidTo().isEqual(currentLocalDate);
+								boolean isInBetween = currentLocalDate.isAfter(ele.getValidFrom())
+															&& currentLocalDate.isBefore(ele.getValidTo());
+							return fromDate || toDate || isInBetween;
+				})
+				.collect(Collectors.toList());
 		return collect;
 	}
 

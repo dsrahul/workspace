@@ -65,19 +65,20 @@ public class OfferControllerIntegrationTest {
 	}
 	@Test
 	public void testFindOffers() throws Exception {		
-		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/1", OfferDTO[].class);
+		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/2", OfferDTO[].class);
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response, notNullValue());
 		OfferDTO[] body = response.getBody();
 		assertThat(body, notNullValue());
-		assertThat(body.length, is(1));        
+		assertThat(body.length, is(1));       
+		
 	}
 
 
 	@Test
 	public void testFindOffersNoResult() throws Exception {	
 		log.info("testFindOffersNoResult");		
-		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/2", OfferDTO[].class);
+		ResponseEntity<OfferDTO[]> response = restTemplate.getForEntity("/merchants/3/offers/1", OfferDTO[].class);
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
         assertThat(response, notNullValue());
 		OfferDTO[] body = response.getBody();
@@ -146,7 +147,7 @@ public class OfferControllerIntegrationTest {
         assertThat(response, notNullValue());
 		OfferDTO[] body = response.getBody();
 		assertThat(body, notNullValue());
-		assertThat(body.length, is(1));        
+		assertThat(body.length, is(2));        
 	}
 
 
@@ -158,8 +159,7 @@ public class OfferControllerIntegrationTest {
         assertThat(response.getStatusCode(), is(HttpStatus.NO_CONTENT));
         assertThat(response, notNullValue());
 		OfferDTO[] body = response.getBody();
-		assertThat(body).isNull();
-        
+		assertThat(body).isNull();        
 	}
 
 
