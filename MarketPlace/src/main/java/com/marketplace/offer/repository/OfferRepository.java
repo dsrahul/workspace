@@ -13,6 +13,7 @@ import com.marketplace.offer.dto.OfferDTO;
 @Repository
 public interface OfferRepository extends JpaRepository<OfferDTO, Long> {
 
+	
 	List<OfferDTO> findByMerchantIdAndId(Long merchantId, Long id);
 
 	List<OfferDTO> findByMerchantId(Long merchantId);

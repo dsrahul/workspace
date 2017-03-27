@@ -1,10 +1,12 @@
 package com.marketplace.offer.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.isNotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,10 +86,18 @@ public class OfferRepositoryIntegrationTest {
 	@Test
 	@Transactional
 	public void testDeleteOfferNotUpdated() {
-		int deletecount = offerRepository.deleteOffer(3L, 2L);		
+		int deletecount = offerRepository.deleteOffer(3L, 21L);		
 		assertThat(deletecount, is(0));
 		List<OfferDTO> lOfOffers = offerRepository.findByMerchantIdAndId(3L, 1L);
 		assertThat(lOfOffers.get(0).getDeleted(), is("N"));
+	}
+	
+	
+	@Test
+	public void testFindOffers() {
+		List<OfferDTO> actual = offerRepository.findByMerchantId(null);
+		assertThat(actual).isNotNull();
+		assertThat(actual).hasSize(0);
 	}
 
 }

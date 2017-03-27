@@ -33,7 +33,7 @@ public class OfferController {
 	private static final Logger log = LoggerFactory.getLogger(OfferController.class);
 
 	@Autowired
-	private IOfferService offerService;    
+	private IOfferService offerService;   
 	
 	/**
 	 * using POST method to add a list of offers for a specific merchant and offertype.

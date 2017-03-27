@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.reset;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -147,8 +148,7 @@ public class OfferControllerIntegrationTest {
         assertThat(response, notNullValue());
 		OfferDTO[] body = response.getBody();
 		assertThat(body, notNullValue());
-		assertThat(body.length, is(1));
-        
+		assertThat(body.length, is(1));        
 	}
 
 
@@ -185,12 +185,12 @@ public class OfferControllerIntegrationTest {
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         assertThat(response, notNullValue());
 		assertThat(response.getBody()).isNull();	
-		
+
 		ResponseEntity<OfferDTO[]> afterDelete = restTemplate.getForEntity("/merchants/3/offers/1", OfferDTO[].class);
-        assertThat(afterDelete.getStatusCode(), is(HttpStatus.OK));
+        assertThat(afterDelete.getStatusCode(), is(HttpStatus.NO_CONTENT));
         assertThat(afterDelete, notNullValue());
-		OfferDTO[] body = afterDelete.getBody();
-		assertThat(body[0].getDeleted(), is("Y"));
+        assertThat(afterDelete.getBody()).isNull();
+        
 	}
 	
 	

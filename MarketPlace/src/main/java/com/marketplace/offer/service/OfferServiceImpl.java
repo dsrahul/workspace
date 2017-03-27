@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.marketplace.offer.business.IOfferBusinessService;
 import com.marketplace.offer.dto.OfferDTO;
 import com.marketplace.offer.exception.OfferNotUpdatedException;
 import com.marketplace.offer.repository.OfferRepository;
@@ -14,7 +15,9 @@ import com.marketplace.offer.repository.OfferRepository;
 @Component
 public class OfferServiceImpl implements IOfferService {
 	private static final Logger log = LoggerFactory.getLogger(OfferServiceImpl.class);
-			
+
+	@Autowired
+	private IOfferBusinessService offerBusinessService;  
 
 	@Autowired
 	private OfferRepository offerRepository;
@@ -33,7 +36,7 @@ public class OfferServiceImpl implements IOfferService {
 	 */
 	@Override
 	public List<OfferDTO> findOffersByMerchantId(Long merchantId) {
-		return offerRepository.findByMerchantId(merchantId);
+		return offerBusinessService.getActiveOffersForMerchantId(merchantId, null);
 	}
 
 	/**
@@ -47,7 +50,7 @@ public class OfferServiceImpl implements IOfferService {
 
 	@Override
 	public List<OfferDTO> findMerchantOffersByOfferId(final Long merchantId, Long offerId) {
-		return offerRepository.findByMerchantIdAndId(merchantId, offerId);
+		return offerBusinessService.getActiveOffersForMerchantId(merchantId, offerId);
 	}
 
 
