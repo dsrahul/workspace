@@ -33,12 +33,17 @@ public class OfferBusinessServiceFacade implements IOfferBusinessService {
 
 		LocalDate currentLocalDate = dateTimeManager.getCurrentLocalDate();
 		List<OfferDTO> collect = lOfOffers.stream()
-				.filter(ele -> {
-								boolean fromDate = ele.getValidFrom().isEqual(currentLocalDate);
-								boolean toDate = ele.getValidTo().isEqual(currentLocalDate);
-								boolean isInBetween = currentLocalDate.isAfter(ele.getValidFrom())
-															&& currentLocalDate.isBefore(ele.getValidTo());
-							return fromDate || toDate || isInBetween;
+				.filter(ele -> {					
+					LocalDate validTo = ele.getValidTo();
+					if (validTo == null) return true;
+					LocalDate validFrom = ele.getValidFrom();
+					boolean fromDateValid = validFrom.isEqual(currentLocalDate);
+					if (fromDateValid) return true;
+					boolean toDateValid = validTo.isEqual(currentLocalDate);
+					if (toDateValid) return true;
+					boolean isInBetween = currentLocalDate.isAfter(validFrom)
+												&& currentLocalDate.isBefore(validTo);
+					return isInBetween;
 				})
 				.collect(Collectors.toList());
 		return collect;

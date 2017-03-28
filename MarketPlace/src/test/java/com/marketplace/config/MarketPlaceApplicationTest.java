@@ -1,11 +1,21 @@
 package com.marketplace.config;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import static org.junit.Assert.assertTrue;
 
-@SpringBootApplication
+import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.marketplace.MarketPlaceApplication;
+@SpringBootTest
 public class MarketPlaceApplicationTest {
-    
-    public static void main(String args[]) {
-        SpringApplication.run(MarketPlaceApplicationTest.class, args);
-    }
+	@Test(expected=IllegalArgumentException.class)
+	public void test() {
+		MarketPlaceApplication.main(null);
+	}
+	
+	@Test
+	public void testWorks() {
+		
+		MarketPlaceApplication.main(new String[]{""});
+		assertTrue(true);
+	}
 }

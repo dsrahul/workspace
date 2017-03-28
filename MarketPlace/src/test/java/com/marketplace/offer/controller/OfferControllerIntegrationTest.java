@@ -190,11 +190,5 @@ public class OfferControllerIntegrationTest {
         
 	}
 	
-	@Test
-	public void testLocalDate() {
-		
-		ResponseEntity<LocalDate> exchange = restTemplate.exchange("/time", HttpMethod.GET, null, LocalDate.class);
-	}
-	
 	
 }

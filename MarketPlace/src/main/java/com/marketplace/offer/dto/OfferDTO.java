@@ -167,11 +167,11 @@ public class OfferDTO {
 		this.deleted = deleted;
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "OfferDTO [id=" + id + ", typeId=" + typeId + ", categoryId=" + categoryId + ", merchantId=" + merchantId
 				+ ", deleted=" + deleted + "]";
-	}
+	}*/
 	
 	
 

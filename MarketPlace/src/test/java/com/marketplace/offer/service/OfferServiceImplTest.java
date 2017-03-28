@@ -36,12 +36,6 @@ public class OfferServiceImplTest {
 	public void setUp() throws Exception {
 	}
 
-	@Ignore
-	@Test(expected=AssertionError.class)
-	public void testAddOfferAssertionFailure() {
-		when(service.addOffer(null)).thenThrow(new AssertionError());		
-	}
-
 	@Test
 	public void testAddOfferSuccess() throws Exception {
 		

@@ -30,10 +30,10 @@ public class OfferTypeDTO {
 	public String getType() {
 		return type;
 	}
-	@Override
+	/*@Override
 	public String toString() {
 		return "OfferTypeDTO [id=" + id + ", type=" + type + "]";
-	}
+	}*/
 	
 	
 }

@@ -1,5 +1,8 @@
 package com.marketplace.offer.dto;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Before;
 
 public class OfferTypeDTOTest extends DTOTest<OfferTypeDTO> {
@@ -8,10 +11,16 @@ public class OfferTypeDTOTest extends DTOTest<OfferTypeDTO> {
 	public void setUp() throws Exception {
 	}
 
-	@Override
 	protected OfferTypeDTO getInstance() {
-		// TODO Auto-generated method stub
 		return new OfferTypeDTO();
+	}
+
+	@Override
+	protected List<OfferTypeDTO> getlOfInstance() {
+		
+		List<OfferTypeDTO> asList = Arrays.asList(getInstance(), 
+				new OfferTypeDTO(1L, "type"));
+		return asList;
 	}
 
 }

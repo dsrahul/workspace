@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -181,7 +182,8 @@ public abstract class DTOTest<T> {
      *
      * @return An instance to use to test the get and set methods.
      */
-    protected abstract T getInstance();
+    //protected abstract T getInstance();
+    protected abstract List<T> getlOfInstance();
 
     /**
      * Tests all the getters and setters. Verifies that when a set method is called, that the get method returns the
@@ -195,79 +197,90 @@ public abstract class DTOTest<T> {
         /* Sort items for consistent test runs. */
         final SortedMap<String, GetterSetterPair> getterSetterMapping = new TreeMap<>();
 
-        final T instance = getInstance();
+        //final T instance = getInstance();
 
-        for (final Method method : instance.getClass().getMethods()) {
-            final String methodName = method.getName();
+        List<T> lOfInstance = getlOfInstance();
+        for (Iterator<T> iterator = lOfInstance.iterator(); iterator.hasNext();) {
+			T instance = iterator.next();
+			for (final Method method : instance.getClass().getMethods()) {
+	            final String methodName = method.getName();
 
-            if (this.ignoredGetFields.contains(methodName)) {
-                continue;
-            }
+	            if (this.ignoredGetFields.contains(methodName)) {
+	                continue;
+	            }
 
-            String objectName;
-            if (methodName.startsWith("get") && method.getParameters().length == 0) {
-                /* Found the get method. */
-                objectName = methodName.substring("get".length());
+	            String objectName;
+	            if (methodName.startsWith("get") && method.getParameters().length == 0) {
+	                /* Found the get method. */
+	                objectName = methodName.substring("get".length());
 
-                GetterSetterPair getterSettingPair = getterSetterMapping.get(objectName);
-                if (getterSettingPair == null) {
-                    getterSettingPair = new GetterSetterPair();
-                    getterSetterMapping.put(objectName, getterSettingPair);
-                }
-                getterSettingPair.setGetter(method);
-            } else if (methodName.startsWith("set") && method.getParameters().length == 1) {
-                /* Found the set method. */
-                objectName = methodName.substring("set".length());
+	                GetterSetterPair getterSettingPair = getterSetterMapping.get(objectName);
+	                if (getterSettingPair == null) {
+	                    getterSettingPair = new GetterSetterPair();
+	                    getterSetterMapping.put(objectName, getterSettingPair);
+	                }
+	                getterSettingPair.setGetter(method);
+	            } else if (methodName.startsWith("set") && method.getParameters().length == 1) {
+	                /* Found the set method. */
+	                objectName = methodName.substring("set".length());
 
-                GetterSetterPair getterSettingPair = getterSetterMapping.get(objectName);
-                if (getterSettingPair == null) {
-                    getterSettingPair = new GetterSetterPair();
-                    getterSetterMapping.put(objectName, getterSettingPair);
-                }
-                getterSettingPair.setSetter(method);
-            } else if (methodName.startsWith("is") && method.getParameters().length == 0) {
-                /* Found the is method, which really is a get method. */
-                objectName = methodName.substring("is".length());
+	                GetterSetterPair getterSettingPair = getterSetterMapping.get(objectName);
+	                if (getterSettingPair == null) {
+	                    getterSettingPair = new GetterSetterPair();
+	                    getterSetterMapping.put(objectName, getterSettingPair);
+	                }
+	                getterSettingPair.setSetter(method);
+	            } else if (methodName.startsWith("is") && method.getParameters().length == 0) {
+	                /* Found the is method, which really is a get method. */
+	                objectName = methodName.substring("is".length());
 
-                GetterSetterPair getterSettingPair = getterSetterMapping.get(objectName);
-                if (getterSettingPair == null) {
-                    getterSettingPair = new GetterSetterPair();
-                    getterSetterMapping.put(objectName, getterSettingPair);
-                }
-                getterSettingPair.setGetter(method);
-            }
-        }
+	                GetterSetterPair getterSettingPair = getterSetterMapping.get(objectName);
+	                if (getterSettingPair == null) {
+	                    getterSettingPair = new GetterSetterPair();
+	                    getterSetterMapping.put(objectName, getterSettingPair);
+	                }
+	                getterSettingPair.setGetter(method);
+	            }
+	        }
+			
+		}
+        
+        
 
         /*
          * Found all our mappings. Now call the getter and setter or set the field via reflection and call the getting
          * it doesn't have a setter.
-         */
-        for (final Entry<String, GetterSetterPair> entry : getterSetterMapping.entrySet()) {
-            final GetterSetterPair pair = entry.getValue();
-
-            final String objectName = entry.getKey();
-            final String fieldName = objectName.substring(0, 1).toLowerCase() + objectName.substring(1);
-
-            if (pair.hasGetterAndSetter()) {
-                /* Create an object. */
-                final Class<?> parameterType = pair.getSetter().getParameterTypes()[0];
-                final Object newObject = createObject(fieldName, parameterType);
-
-                pair.getSetter().invoke(instance, newObject);
-
-                callGetter(fieldName, pair.getGetter(), instance, newObject);
-            } else if (pair.getGetter() != null) {
-                /*
-                 * Object is immutable (no setter but Hibernate or something else sets it via reflection). Use
-                 * reflection to set object and verify that same object is returned when calling the getter.
-                 */
-                final Object newObject = createObject(fieldName, pair.getGetter().getReturnType());
-                final Field field = instance.getClass().getDeclaredField(fieldName);
-                field.setAccessible(true);
-                field.set(instance, newObject);
-
-                callGetter(fieldName, pair.getGetter(), instance, newObject);
-            }
-        }
+         */ 
+        
+         for (Iterator<T> iterator = lOfInstance.iterator(); iterator.hasNext();) {
+ 			T instance = iterator.next();
+	        for (final Entry<String, GetterSetterPair> entry : getterSetterMapping.entrySet()) {
+	            final GetterSetterPair pair = entry.getValue();
+	
+	            final String objectName = entry.getKey();
+	            final String fieldName = objectName.substring(0, 1).toLowerCase() + objectName.substring(1);
+	
+	            if (pair.hasGetterAndSetter()) {
+	                /* Create an object. */
+	                final Class<?> parameterType = pair.getSetter().getParameterTypes()[0];
+	                final Object newObject = createObject(fieldName, parameterType);
+	
+	                pair.getSetter().invoke(instance, newObject);
+	
+	                callGetter(fieldName, pair.getGetter(), instance, newObject);
+	            } else if (pair.getGetter() != null) {
+	                /*
+	                 * Object is immutable (no setter but Hibernate or something else sets it via reflection). Use
+	                 * reflection to set object and verify that same object is returned when calling the getter.
+	                 */
+	                final Object newObject = createObject(fieldName, pair.getGetter().getReturnType());
+	                final Field field = instance.getClass().getDeclaredField(fieldName);
+	                field.setAccessible(true);
+	                field.set(instance, newObject);
+	
+	                callGetter(fieldName, pair.getGetter(), instance, newObject);
+	            }
+	        }
+         }
     }
 }

@@ -60,10 +60,10 @@ public class MerchantDTO {
 	}
 
 
-	@Override
+	/*@Override
 	public String toString() {
 		return "MerchantDTO [id=" + id + ", code=" + code + ", name=" + name + ", currencyCode=" + currencyCode + "]";
-	}
+	}*/
 	
 	
 }
