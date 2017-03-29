@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            Offer Management
+        </title>
+    </head>
+    <body ng-app="myApp" ng-controller="OfferManagementController">
+        <div class="container">
+            <div class="row">
+                <ol class = "breadcrumb">
+                   <li><a href="#/">Home</a></li>
+                   <li><a href="#/merchants">Merchants</a></li>
+                </ol>
+            </div>   
+            <div class="page-header"><h1>Add/Edit Offer</h1><small>For : {{merchant.name}}</small></div>
+            <div  class = "table-responsive">
+                <form ng-submit="submitOffer()" class="form-group">
+
+                        <table class = "table">
+                            <tr>
+                                <td><label for = "title">Title</label></td>
+                                <td><input type="text" ng-model="form.title" class = "form-control"/></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label"  for = "from">Valid from</label></td>
+                                <td><input type="text" ng-model="form.validFrom" class = "form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label"  for = "to">Valid from</label></td>
+                                <td><input type="text" ng-model="form.validTo" class = "form-control" /></td>
+                            </tr>
+                            <tr>
+                                <td><label for = "description">Description</label></td>
+                                <td>
+                                <textarea ng-model="form.description" class = "form-control" ></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><input type="submit" value="Submit" class = "btn btn-default btn-lg btn-block active" class = "form-control" /></td>
+                            </tr>
+                        </table>
+
+                </form>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div class = "table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Valid From</th>
+                            <th>Valid To</th>
+                            <th>Actions</th>
+                        </tr>
+
+                        <tr ng-repeat="offer in offers">
+                            <td>{{ offer.title }}</td>
+                            <td>{{ offer.description }}</td>
+                            <td>{{ offer.validFrom }}</td>
+                            <td>{{ offer.validTo }}</td>
+                            <td><a ng-click="editOffer( offer )" class="button">Edit</a> | <a ng-click="removeOffer( offer )" class="button">Remove</a></td>
+                        </tr>
+
+                    </table>   
+                </div>
+            </div>
+        </div>
+        
+        <script>
+                console.log('hello');
+            
+        </script>      
+    </body>
+</html>

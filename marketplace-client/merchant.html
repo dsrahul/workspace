@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head><title>Merchant Selection</title></head>
+    <body ng-app="myApp" ng-controller="MerchantController">
+        <div class="container">
+            <div class="row">
+                <ol class = "breadcrumb">
+                   <li><a href="#/">Home</a></li>
+                </ol>
+            </div>   
+            <div class = "page-header"><h1>Available Merchants</h1></div>
+
+            <div class="row">
+                <table class="table">
+                    <tr>
+                        <th>NAME</th>
+                        <th>ACTION</th>
+                    </tr>
+                    <tr ng-repeat="merchant in merchants" >
+                        <td>{{merchant.name}}</td>
+                        <td><a href="#/offers" ng-click="pickMerchant( merchant )" class="button">Select</a></td>
+                    </tr>        
+                </table>
+            </div>
+        </div>
+        
+    </body>
+</html>

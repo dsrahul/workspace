@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>
+            Landing Page
+        </title>
+    </head>
+    <body ng-app="myApp" ng-controller="HomeController">
+        <div class="container">
+            <div class="row">
+                <ol class = "breadcrumb">
+                   <li></li>
+                </ol>
+            </div>   
+            <div class="page-header"><h1>Home</h1></div>
+
+            <div class="alert alert-danger" ng-show="controller.error">
+                There was a problem logging in. Please try again.
+            </div>
+            <form role="form" ng-submit="login()" class="form-group">
+                <div class="form-group">
+                    <label for="username">Username:</label> <input type="text"
+                        class="form-control" placeholder="user name" id="username" name="username" ng-model="form.username"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label> <input type="password"
+                        class="form-control" placeholder="password" id="password" name="password" ng-model="form.password"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+    </body>
+</html>
