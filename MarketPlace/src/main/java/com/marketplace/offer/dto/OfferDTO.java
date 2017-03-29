@@ -102,54 +102,6 @@ public class OfferDTO {
 		this.deleted = active;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public Long getTypeId() {
-		return typeId;
-	}
-
-	public Long getMerchantId() {
-		return merchantId;
-	}
-
-	public LocalDate getValidFrom() {
-		return validFrom;
-	}
-
-	public LocalDate getValidTo() {
-		return validTo;
-	}
-
-	public OfferTypeDTO getOfferType() {
-		return offerType;
-	}
-
-	public MerchantDTO getMerchantDTO() {
-		return merchantDTO;
-	}
-
-	public Long getCategoryId() {
-		return categoryId;
-	}
-
-	public CategoryDTO getCategoryDTO() {
-		return categoryDTO;
-	}
-
-	public String getDeleted() {
-		return deleted;
-	}
-
 	public OfferDTO(Long id, String title, String description, Long typeId, OfferTypeDTO offerType, Long categoryId,
 			CategoryDTO categoryDTO, Long merchantId, MerchantDTO merchantDTO, LocalDate validFrom, LocalDate validTo, String deleted) {
 		super();
@@ -167,6 +119,104 @@ public class OfferDTO {
 		this.deleted = deleted;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Long getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+	}
+
+	public OfferTypeDTO getOfferType() {
+		return offerType;
+	}
+
+	public void setOfferType(OfferTypeDTO offerType) {
+		this.offerType = offerType;
+	}
+
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
+	public CategoryDTO getCategoryDTO() {
+		return categoryDTO;
+	}
+
+	public void setCategoryDTO(CategoryDTO categoryDTO) {
+		this.categoryDTO = categoryDTO;
+	}
+
+	public Long getMerchantId() {
+		return merchantId;
+	}
+
+	public void setMerchantId(Long merchantId) {
+		this.merchantId = merchantId;
+	}
+
+	public MerchantDTO getMerchantDTO() {
+		return merchantDTO;
+	}
+
+	public void setMerchantDTO(MerchantDTO merchantDTO) {
+		this.merchantDTO = merchantDTO;
+	}
+
+	public LocalDate getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(LocalDate validFrom) {
+		this.validFrom = validFrom;
+	}
+
+	public LocalDate getValidTo() {
+		return validTo;
+	}
+
+	public void setValidTo(LocalDate validTo) {
+		this.validTo = validTo;
+	}
+
+	public String getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
+
+	
+	
 	/*@Override
 	public String toString() {
 		return "OfferDTO [id=" + id + ", typeId=" + typeId + ", categoryId=" + categoryId + ", merchantId=" + merchantId

@@ -1,9 +1,13 @@
 package com.marketplace.offer.service;
 
+import java.beans.FeatureDescriptor;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +69,26 @@ public class OfferServiceImpl implements IOfferService {
 		if (deleteOffer == 0) {
 			throw new OfferNotUpdatedException("Offer was already deleted or does not exist");
 		}
-	}
-	
+	}	
 
+
+	@Override
+	public OfferDTO updateOffer(OfferDTO anOfferDTO) {
+		
+		/*OfferDTO source = offerRepository.findOne(anOfferDTO.getId());
+		
+		String[] nullPropertyNames = getNullPropertyNames(anOfferDTO);
+		
+		BeanUtils.copyProperties(anOfferDTO, source, nullPropertyNames);*/
+		
+		return offerRepository.save(anOfferDTO);
+	}
+
+	public static String[] getNullPropertyNames(Object source) {
+	    final BeanWrapper wrappedSource = new BeanWrapperImpl(source);
+	    return Stream.of(wrappedSource.getPropertyDescriptors())
+	            .map(FeatureDescriptor::getName)
+	            .filter(propertyName -> wrappedSource.getPropertyValue(propertyName) == null)
+	            .toArray(String[]::new);
+	}
 }

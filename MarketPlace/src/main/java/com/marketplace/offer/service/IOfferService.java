@@ -9,6 +9,8 @@ public interface IOfferService {
 
 	OfferDTO addOffer(OfferDTO anOfferDTO);
 
+	OfferDTO updateOffer(OfferDTO anOfferDTO);
+
 	List<OfferDTO> findOffersByMerchantId(Long merchantId);
 
 	List<OfferDTO> bulkAdd(List<OfferDTO> lOfOfferDTOs);
